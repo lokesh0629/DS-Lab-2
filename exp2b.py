@@ -1,0 +1,15 @@
+import sqlite3
+import pandas as pd
+conn=sqlite3.connect("student.db")
+cursor=conn.cursor()
+cursor.execute('''CREATE TABLE IF NOT EXISTS student(id NUMBER,name TEXT)''')
+cursor.execute("INSERT INTO student VALUES(1,'John')")
+conn.commit()
+cursor.execute("INSERT INTO student VALUES(2,'Joy')")
+conn.commit()
+df=pd.read_sql_query("SELECT * FROM student",conn)
+print(df)
+cursor.execute("UPDATE student SET name='Alice' WHERE id=1")
+cursor.execute("DELETE FROM student WHERE id=1")
+conn.commit()
+conn.close()
